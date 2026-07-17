@@ -26,3 +26,4 @@ class Settings:
         self.alien_height = 40
         self.fleet_speed = 3
         self.fleet_direction = 1   # 1 represents right; -1 represents left
+        self.fleet_drop_speed = 40
