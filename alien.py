@@ -24,11 +24,14 @@ class Alien(Sprite):
         self.rect.x = x
         self.rect.y = y
         
-        # self.y = float(self.rect.y)
+        self.y = float(self.rect.y)
+        self.x = float(self.rect.x)
 
     def update(self):
         """Move the alien right,left, and down, depending on the fleet direction."""
-        pass
+        temp_speed = self.settings.fleet_speed
+        self.rect.x += temp_speed
+        self.rect.x = self.x
 
     def draw_alien(self):
         """Draw the alien at its current location."""
