@@ -6,7 +6,12 @@ if TYPE_CHECKING:
     from alien_invasion import AlienInvasion
 
 class Alien(Sprite):
+    """A class to represent a single alien in the fleet."""
+
     def __init__(self, game: 'AlienInvasion', x: float, y: float):
+        
+        """Initialize the alien and set its starting position."""
+        
         super().__init__()
         self.screen = game.screen
         self.boundaries = game.screen.get_rect()
@@ -22,7 +27,10 @@ class Alien(Sprite):
         # self.y = float(self.rect.y)
 
     def update(self):
+        """Move the alien right,left, and down, depending on the fleet direction."""
         pass
 
     def draw_alien(self):
+        """Draw the alien at its current location."""
+
         self.screen.blit(self.image, self.rect)

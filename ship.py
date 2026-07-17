@@ -6,8 +6,11 @@ if TYPE_CHECKING:
     from arsenal import Arsenal
 
 class Ship:
+    """A class to manage the ship."""
     
     def __init__(self, game: 'AlienInvasion', arsenal: 'Arsenal'):
+        """Initialize the ship and set its starting position."""
+
         self.game = game
         self.settings = game.settings
         self.screen = game.screen
@@ -24,11 +27,14 @@ class Ship:
         self.arsenal = arsenal
 
     def update(self):
-        # updating the position of the ship
+        """Update the ship's position based on movement flags."""
+
         self._update_ship_movement()
         self.arsenal.update_arsenal()
 
     def _update_ship_movement(self):
+        """Calculate the new position of the ship within boundaries."""
+
         temp_speed = self.settings.ship_speed
         if self.moving_right and self.rect.right < self.boundaries.right:
             self.x += temp_speed
@@ -38,8 +44,12 @@ class Ship:
         self.rect.x = self.x
     
     def draw(self):
+        """Draw the ship and its arsenal at its current location."""
+
         self.arsenal.draw()
         self.screen.blit(self.image, self.rect)
     
     def fire(self):
+        """Signal the arsenal to fire a bullet, if possible."""
+
         return self.arsenal.fire_bullet()
