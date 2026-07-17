@@ -29,9 +29,20 @@ class Alien(Sprite):
 
     def update(self):
         """Move the alien right,left, and down, depending on the fleet direction."""
+        
         temp_speed = self.settings.fleet_speed
-        self.rect.x += temp_speed
+
+        if self.check_edges():
+            self.settings.fleet_direction *= -1
+        
+        self.x += temp_speed * self.settings.fleet_direction
         self.rect.x = self.x
+
+    def check_edges(self):
+        """Return if alien is at edge of screen."""
+        return (self.rect.right >= self.boundaries.right or self.rect.left <= self.boundaries.left
+        )
+        
 
     def draw_alien(self):
         """Draw the alien at its current location."""
