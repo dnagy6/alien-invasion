@@ -1,7 +1,7 @@
 from pathlib import Path
 import pathlib
 
-class Settings:
+class Settings: 
     def __init__(self):
         self.name = "Alien Invasion"
         self.screen_width = 1200
