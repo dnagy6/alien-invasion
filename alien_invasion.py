@@ -57,14 +57,16 @@ class AlienInvasion:
             self.clock.tick(self.settings.FPS)
 
     def _check_collisions(self):
+        """Respond to bullet-alien collisions and check game-ending conditions."""
+
         # check collisions for ship
         if self.ship.check_collisions(self.alien_fleet.fleet):
             self._check_game_status()
-         # checek collisions for aliens and bottom of screen
+         # check collisions for aliens and bottom of screen
         if self.alien_fleet.check_fleet_bottom():
             self._check_game_status()
             
-        # chcek collisions of projcetiles and aliens
+        # check collisions of projcetiles and aliens
         collisions = self.alien_fleet.check_collisions(self.ship.arsenal.arsenal)
         if collisions:
             self.impact_sound.play()
@@ -74,6 +76,8 @@ class AlienInvasion:
             self._reset_level()
 
     def _check_game_status(self):
+        """Deduct a life when the ship is hit or an alien reaches the bottom, ending the game if lives run out."""
+
         if self.game_stats.ships_left > 0:
             self.game_stats.ships_left -= 1
             self._reset_level()
@@ -82,6 +86,8 @@ class AlienInvasion:
             self.game_active = False
 
     def _reset_level(self):
+        """Clear active projectiles, wipe the current fleet, and spawn a fresh alien fleet."""
+
         self.ship.arsenal.arsenal.empty()
         self.alien_fleet.fleet.empty()
         self.alien_fleet.create_fleet()

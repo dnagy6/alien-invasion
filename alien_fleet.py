@@ -10,6 +10,8 @@ if TYPE_CHECKING:
 class AlienFleet:
 
     def __init__(self, game: 'AlienInvasion'):
+        """Initialize the fleet manager, track screen/settings resources, and trigger initial fleet creation."""
+
         self.game = game
         self.settings = game.settings
         self.fleet = pygame.sprite.Group()
@@ -19,6 +21,8 @@ class AlienFleet:
         self.create_fleet()
 
     def create_fleet(self):
+        """Orchestrate the layout math and pass the dimensions to the rectangle grid creator."""
+
         alien_width = self.settings.alien_width
         alien_height = self.settings.alien_height
         screen_width = self.settings.screen_width
@@ -31,6 +35,8 @@ class AlienFleet:
         self._create_rectangle_fleet(alien_width, alien_height, fleet_width, fleet_height, x_offset, y_offset)
 
     def _create_rectangle_fleet(self, alien_width, alien_height, fleet_width, fleet_height, x_offset, y_offset):
+        """Loop through rows and columns to spawn individual aliens in a custom spaced-grid pattern."""
+
         for row in range(fleet_height):
             for col in range(fleet_width):
                 current_x = alien_width * col + x_offset
@@ -40,6 +46,8 @@ class AlienFleet:
                 self._create_alien(current_x, current_y)
 
     def calculate_offsets(self, alien_width, alien_height, screen_width, fleet_width, fleet_height):
+        """Calculate horizontal and vertical padding to perfectly center the fleet in its designated screen zone."""
+
         half_screen = self.settings.screen_height//2
         fleet_horizontal_space = fleet_width * alien_width
         fleet_vertical_space = fleet_height * alien_height
@@ -48,6 +56,8 @@ class AlienFleet:
         return x_offset,y_offset
 
     def calculate_fleet_size(self, alien_width, screen_width, alien_height, screen_height):
+        """Dynamically compute how many rows and columns of aliens can fit on the screen without overcrowding."""
+
         fleet_width = (screen_width//alien_width)
         fleet_height = ((screen_height / 2) // alien_height)
         if fleet_width % 2 == 0:
@@ -63,12 +73,15 @@ class AlienFleet:
         return int(fleet_width), int(fleet_height)
     
     def _create_alien(self, current_x: int, current_y:int):
+        """Instantiate a single alien agent at specific pixel coordinates and register it to the sprite group."""
+
         new_alien = Alien(self, current_x, current_y)
 
         self.fleet.add(new_alien)
 
     
     def _check_fleet_edges(self):
+        """Checks for game window boundaries and tells Alien Fleet to stop based on edges."""
         alien: Alien
         for alien in self.fleet:
             if alien.check_edges():
@@ -77,10 +90,13 @@ class AlienFleet:
                 break
     
     def _drop_alien_fleet(self):
+        """This will change the vertical positioning of the Alien Fleet based on y value of Alien."""
         for alien in self.fleet:
             alien.y += self.fleet_drop_speed
 
     def update_fleet(self):
+        """Check fleet boundaries and update positions of all living aliens."""
+
         self._check_fleet_edges()
         self.fleet.update()
 
@@ -91,9 +107,13 @@ class AlienFleet:
             alien.draw_alien()
 
     def check_collisions(self, other_group):
+        """Handle sprite gorup collisions between the fleet and another element, like bullets."""
+
         return pygame.sprite.groupcollide(self.fleet, other_group, True, True)
     
     def check_fleet_bottom(self):
+        """Determine if any alien in the fleet has broken through past the screen height boundary."""
+
         alien: Alien
         for alien in self.fleet:
             if alien.rect.bottom >= self.settings.screen_height:
@@ -101,5 +121,7 @@ class AlienFleet:
             return False
         
     def check_destroyed_status(self):
+        """Return True if the fleet has been completely wiped out."""
+
         return not self.fleet
         

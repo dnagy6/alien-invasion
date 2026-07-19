@@ -26,6 +26,8 @@ class Ship:
         self.arsenal = arsenal
 
     def _center_ship(self):
+        """Recenter the ship horizontally at the midbottom position of the screen layout."""
+        
         self.rect.midbottom = self.boundaries.midbottom
         self.x = float(self.rect.x)
 
@@ -58,6 +60,8 @@ class Ship:
         return self.arsenal.fire_bullet()
     
     def check_collisions(self, other_group):
+        """Check if any sprite in an external group has collided with the ship's hitbox."""
+
         if pygame.sprite.spritecollideany(self, other_group):
             self._center_ship()
             return True
