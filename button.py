@@ -19,7 +19,7 @@ class Button:
 
     def _prep_msg(self, msg):
         self.msg_image = self.font.render(msg, True, self.settings.text_color, None)
-        self.msg_image_rect = self.msg_image.get.rect()
+        self.msg_image_rect = self.msg_image.get_rect()
         self.msg_image_rect.center = self.rect.center
 
     def draw (self):
