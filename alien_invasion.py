@@ -107,6 +107,7 @@ class AlienInvasion:
         self.alien_fleet.create_fleet()
 
     def restart_game(self):
+        """Reset game dynamic settings, stats, HUD display, ship placement, and begin active session."""
         self.settings.initialize_dynamic_settings()
         # reset Game Stats
         self.game_stats.reset_stats()
@@ -164,7 +165,7 @@ class AlienInvasion:
 
 
     def _check_keydown_events(self, event):
-        """Respond to keypresses."""
+        """Respond to keypresses, and saves the score when the user quits out of the game."""
         
         if event.key == pygame.K_RIGHT:
             self.ship.moving_right = True
