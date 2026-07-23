@@ -86,6 +86,7 @@ class AlienInvasion:
             # update game stats level
             self.game_stats.update_level()
             # update HUD view
+            self.HUD._update_level()
 
     def _check_game_status(self):
         """Deduct a life when the ship is hit or an alien reaches the bottom, ending the game if lives run out."""
